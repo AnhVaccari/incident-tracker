@@ -1,0 +1,70 @@
+<div class="incident-form-container">
+  <!-- Bouton pour afficher/masquer le formulaire -->
+  <button (click)="toggleForm()" class="btn btn-secondary toggle-btn">
+    {{ showForm ? '✕ Annuler' : '+ Nouvel Incident' }}
+  </button>
+
+  <!-- Formulaire (affiché conditionnellement) -->
+  @if (showForm) {
+  <div class="form-overlay">
+    <div class="form-modal">
+      <h3>Créer un nouvel incident</h3>
+
+      <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()">
+        <!-- Titre -->
+        <div class="form-group">
+          <label for="title">Titre *</label>
+          <input
+            id="title"
+            type="text"
+            formControlName="title"
+            placeholder="Ex: PC ne démarre plus"
+            class="form-control"
+          />
+          @if (incidentForm.get('title')?.invalid && incidentForm.get('title')?.touched) {
+          <div class="error">Le titre doit contenir au moins 3 caractères</div>
+          }
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            placeholder="Décrivez le problème en détail..."
+            rows="4"
+            class="form-control"
+          ></textarea>
+          @if (incidentForm.get('description')?.invalid && incidentForm.get('description')?.touched)
+          {
+          <div class="error">La description doit contenir au moins 10 caractères</div>
+          }
+        </div>
+
+        <!-- Priorité -->
+        <div class="form-group">
+          <label for="priority">Priorité *</label>
+          <select id="priority" formControlName="priority" class="form-control">
+            @for (priority of priorities; track priority.value) {
+            <option [value]="priority.value">{{ priority.label }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Boutons -->
+        <div class="form-actions">
+          <button type="button" (click)="toggleForm()" class="btn btn-secondary">Annuler</button>
+          <button
+            type="submit"
+            [disabled]="incidentForm.invalid || isSubmitting"
+            class="btn btn-primary"
+          >
+            {{ isSubmitting ? 'Création...' : "Créer l'incident" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  }
+</div>
