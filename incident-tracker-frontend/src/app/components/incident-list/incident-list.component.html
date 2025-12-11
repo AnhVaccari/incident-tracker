@@ -1,0 +1,63 @@
+<div class="incident-list-container">
+  <h2>Liste des Incidents</h2>
+
+  <!-- Loading spinner -->
+  @if (isLoading) {
+  <div class="loading">Chargement des incidents...</div>
+  }
+
+  <!-- Message si aucun incident -->
+  @if (!isLoading && incidents.length === 0) {
+  <div class="no-incidents">Aucun incident trouvé.</div>
+  }
+
+  <!-- Tableau des incidents -->
+  @if (!isLoading && incidents.length > 0) {
+  <div class="incidents-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Description</th>
+          <th>Priorité</th>
+          <th>Statut</th>
+          <th>Créé le</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (incident of incidents; track incident.id) {
+        <tr>
+          <td>{{ incident.id }}</td>
+          <td>{{ incident.title }}</td>
+          <td>{{ incident.description }}</td>
+          <td [class]="'priority-' + incident.priority.toLowerCase()">
+            {{ incident.priority }}
+          </td>
+          <td [class]="'status-' + incident.status.toLowerCase()">
+            {{ incident.status }}
+          </td>
+          <td>{{ incident.createdAt | date : 'short' }}</td>
+          <td>
+            @if (incident.status === 'OPEN') {
+            <button (click)="changeStatus(incident, 'IN_PROGRESS')" class="btn btn-warning">
+              Prendre en charge
+            </button>
+            } @if (incident.status === 'IN_PROGRESS') {
+            <button (click)="changeStatus(incident, 'RESOLVED')" class="btn btn-success">
+              Résoudre
+            </button>
+            } @if (incident.status === 'RESOLVED') {
+            <button (click)="changeStatus(incident, 'CLOSED')" class="btn btn-secondary">
+              Fermer
+            </button>
+            }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+</div>
