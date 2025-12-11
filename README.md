@@ -27,10 +27,10 @@ Cette application permet de gérer le cycle de vie complet des incidents informa
 ## 📸 Aperçu
 
 ### Liste des incidents
-![Liste des incidents](images/incident-list.png)
+![Liste des incidents](images/incident_list.png)
 
 ### Création d'incident
-![Modal de création](images/incident-creation.png)
+![Modal de création](images/incident_creation.png)
 
 ## 🛠️ Installation et lancement
 
