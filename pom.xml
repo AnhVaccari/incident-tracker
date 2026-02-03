@@ -28,8 +28,21 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<langchain4j.version>0.36.2</langchain4j.version>
 	</properties>
 	<dependencies>
+		<!-- LangChain4j pour l'IA -->
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-spring-boot-starter</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-open-ai-spring-boot-starter</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-h2console</artifactId>

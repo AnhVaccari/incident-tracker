@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anh.incident_tracker.dto.ClassifyRequest;
 import com.anh.incident_tracker.dto.CreateIncidentRequest;
+import com.anh.incident_tracker.dto.IncidentSuggestion;
 import com.anh.incident_tracker.dto.StatusUpdateRequest;
 import com.anh.incident_tracker.entity.Incident;
+import com.anh.incident_tracker.service.AiService;
 import com.anh.incident_tracker.service.IncidentService;
 
 import jakarta.validation.Valid;
@@ -28,6 +31,9 @@ public class IncidentController {
 
     @Autowired
     private IncidentService incidentService;
+
+    @Autowired
+    private AiService aiService;
 
     // GET /api/incidents - Récupère tous les incidents
     @GetMapping
@@ -74,6 +80,13 @@ public class IncidentController {
     public ResponseEntity<List<Incident>> getActiveIncidents() {
         List<Incident> activeIncidents = incidentService.getActiveIncidents();
         return ResponseEntity.ok(activeIncidents);
+    }
+
+    // POST /api/incidents/classify - Classification IA d'un incident
+    @PostMapping("/classify")
+    public ResponseEntity<IncidentSuggestion> classifyIncident(@Valid @RequestBody ClassifyRequest request) {
+        IncidentSuggestion suggestion = aiService.classifyIncident(request.title(), request.description());
+        return ResponseEntity.ok(suggestion);
     }
 
 }
