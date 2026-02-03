@@ -2,6 +2,7 @@ package com.anh.incident_tracker.ai;
 
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
+import dev.langchain4j.service.V;
 
 public interface IncidentClassifier {
 
@@ -23,5 +24,5 @@ public interface IncidentClassifier {
         Titre: {{title}}
         Description: {{description}}
         """)
-    String classify(String title, String description);
+    String classify(@V("title") String title, @V("description") String description);
 }
