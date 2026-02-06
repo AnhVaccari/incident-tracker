@@ -42,6 +42,31 @@
           }
         </div>
 
+        <!-- Bouton suggestion IA -->
+        <div class="form-group">
+          <button
+            type="button"
+            (click)="askAiSuggestion()"
+            [disabled]="isAnalyzing || !incidentForm.get('title')?.value || !incidentForm.get('description')?.value"
+            class="btn btn-ai"
+          >
+            {{ isAnalyzing ? 'Analyse en cours...' : 'Suggérer avec IA' }}
+          </button>
+
+          <!-- Affichage de la suggestion -->
+          @if (suggestion) {
+          <div class="ai-suggestion">
+            <strong>Suggestion IA :</strong>
+            <p><b>Priorité :</b> {{ suggestion.priority }}</p>
+            <p><b>Catégorie :</b> {{ suggestion.category }}</p>
+            <p><b>Raison :</b> {{ suggestion.reasoning }}</p>
+            <button type="button" (click)="applySuggestion()" class="btn btn-apply">
+              Appliquer la priorité
+            </button>
+          </div>
+          }
+        </div>
+
         <!-- Priorité -->
         <div class="form-group">
           <label for="priority">Priorité *</label>

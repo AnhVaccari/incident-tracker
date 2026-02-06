@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {
   CreateIncidentRequest,
   Incident,
+  IncidentSuggestion,
   StatusUpdateRequest,
 } from '../interfaces/incident.interface';
 
@@ -28,5 +29,13 @@ export class IncidentService {
   // Changer le statut
   changeStatus(id: number, request: StatusUpdateRequest): Observable<Incident> {
     return this.http.put<Incident>(`${this.apiUrl}/${id}/status`, request);
+  }
+
+  // Classification IA d'un incident
+  classifyIncident(title: string, description: string): Observable<IncidentSuggestion> {
+    return this.http.post<IncidentSuggestion>(`${this.apiUrl}/classify`, {
+      title,
+      description,
+    });
   }
 }

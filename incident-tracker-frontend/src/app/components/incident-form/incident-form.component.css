@@ -98,3 +98,53 @@ label {
   border-radius: 4px;
   font-size: 14px;
 }
+
+/* Bouton IA */
+.btn-ai {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-ai:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn-ai:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Suggestion IA */
+.ai-suggestion {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f0f4ff;
+  border: 1px solid #667eea;
+  border-radius: 6px;
+}
+
+.ai-suggestion p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.btn-apply {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-apply:hover {
+  background-color: #218838;
+}

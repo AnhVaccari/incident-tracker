@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IncidentService } from '../../services/incident.service';
-import { CreateIncidentRequest } from '../../interfaces/incident.interface';
+import { CreateIncidentRequest, IncidentSuggestion } from '../../interfaces/incident.interface';
 
 @Component({
   selector: 'app-incident-form',
@@ -14,6 +14,10 @@ export class IncidentFormComponent {
   incidentForm: FormGroup;
   isSubmitting = false;
   showForm = false;
+
+  // IA
+  isAnalyzing = false;
+  suggestion: IncidentSuggestion | null = null;
 
   priorities = [
     { value: 'LOW', label: 'Faible' },
@@ -34,6 +38,38 @@ export class IncidentFormComponent {
     this.showForm = !this.showForm;
     if (!this.showForm) {
       this.incidentForm.reset();
+      this.suggestion = null;
+    }
+  }
+
+  // Demander une suggestion à l'IA
+  askAiSuggestion(): void {
+    const title = this.incidentForm.get('title')?.value;
+    const description = this.incidentForm.get('description')?.value;
+
+    if (!title || !description) {
+      return;
+    }
+
+    this.isAnalyzing = true;
+    this.suggestion = null;
+
+    this.incidentService.classifyIncident(title, description).subscribe({
+      next: (result) => {
+        this.suggestion = result;
+        this.isAnalyzing = false;
+      },
+      error: (error) => {
+        console.error('Erreur IA:', error);
+        this.isAnalyzing = false;
+      },
+    });
+  }
+
+  // Appliquer la suggestion de l'IA
+  applySuggestion(): void {
+    if (this.suggestion) {
+      this.incidentForm.patchValue({ priority: this.suggestion.priority });
     }
   }
 

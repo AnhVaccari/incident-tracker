@@ -17,3 +17,10 @@ export interface CreateIncidentRequest {
 export interface StatusUpdateRequest {
   status: 'OPEN' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED';
 }
+
+// Réponse de l'IA pour la classification
+export interface IncidentSuggestion {
+  priority: 'LOW' | 'NORMAL' | 'HIGH' | 'CRITICAL';
+  category: string;
+  reasoning: string;
+}
